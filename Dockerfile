@@ -2,11 +2,17 @@
 # MailHog Dockerfile
 #
 
-FROM alpine:3.4
+FROM alpine:3.7
+
+# TODO: remove before release
+ENV MH_STORAGE="boltdb" \
+    MH_BOLTDB_PATH="/home/mailhog/bolt.db" \
+    MH_BOLTDB_BUCKET="mailhog"
+
 
 # Install ca-certificates, required for the "release message" feature:
 RUN apk --no-cache add \
-    ca-certificates
+    ca-certificates musl-dev
 
 # Install MailHog:
 RUN apk --no-cache add --virtual build-dependencies \
@@ -14,7 +20,7 @@ RUN apk --no-cache add --virtual build-dependencies \
     git \
   && mkdir -p /root/gocode \
   && export GOPATH=/root/gocode \
-  && go get github.com/mailhog/MailHog \
+  && go get github.com/bobrnor/MailHog \
   && mv /root/gocode/bin/MailHog /usr/local/bin \
   && rm -rf /root/gocode \
   && apk del --purge build-dependencies
