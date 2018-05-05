@@ -3,15 +3,27 @@
 
 [[projects]]
   name = "github.com/bobrnor/MailHog-Server"
-  packages = ["."]
-  revision = "50f74a1aa2991b96313144d1ac718ce4d6739dfd"
-  version = "v1.0.0"
+  packages = [
+    "api",
+    "config",
+    "monkey",
+    "smtp",
+    "websockets"
+  ]
+  revision = "2da3a03c051264110e7bea9f52335893bc3fb4d0"
+  version = "1.1.1"
 
 [[projects]]
   name = "github.com/bobrnor/storage"
   packages = ["."]
-  revision = "6d871fb23ecd873cb10cdfc3a8dec5f50d2af8fa"
-  version = "v1.0.0"
+  revision = "0209cd07a614450e9e7439a3d0365f977501d0f5"
+  version = "1.1.1"
+
+[[projects]]
+  name = "github.com/boltdb/bolt"
+  packages = ["."]
+  revision = "2f1ce7a837dcb8da3ec595b1dac9d0632f0f99e8"
+  version = "v1.3.1"
 
 [[projects]]
   branch = "master"
@@ -64,24 +76,6 @@
   revision = "77fb4b01842cb4b019137c0227df9a8f9779d0bd"
 
 [[projects]]
-  name = "github.com/mailhog/MailHog"
-  packages = ["config"]
-  revision = "cf19697cb1c0b0319116b2c405f5af3f53bc37cd"
-  version = "v1.0.0"
-
-[[projects]]
-  name = "github.com/mailhog/MailHog-Server"
-  packages = [
-    "api",
-    "config",
-    "monkey",
-    "smtp",
-    "websockets"
-  ]
-  revision = "50f74a1aa2991b96313144d1ac718ce4d6739dfd"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/mailhog/MailHog-UI"
   packages = [
     "assets",
@@ -115,12 +109,6 @@
   version = "v1.0.0"
 
 [[projects]]
-  name = "github.com/mailhog/storage"
-  packages = ["."]
-  revision = "6d871fb23ecd873cb10cdfc3a8dec5f50d2af8fa"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/philhofer/fwd"
   packages = ["."]
   revision = "98c11a7a6ec829d672b03833c3d69a7fae1ca972"
@@ -151,6 +139,12 @@
   revision = "f6b343c37ca80bfa8ea539da67a0b621f84fab1d"
 
 [[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "6f686a352de66814cdd080d970febae7767857a3"
+
+[[projects]]
   name = "gopkg.in/mgo.v2"
   packages = [
     ".",
@@ -163,6 +157,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "54c8da5b6a558be0fb7b3eaa3afc3c4ce55e2f453b7894f6256a86a01d855ddd"
+  inputs-digest = "563c76f7955f83a16f1319d86de250fbd62daa7e66fd18497ba117f4129aca6f"
   solver-name = "gps-cdcl"
   solver-version = 1
