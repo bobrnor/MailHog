@@ -60,3 +60,7 @@
 [[constraint]]
   name = "github.com/bobrnor/storage"
   version = "1.0.0"
+
+[[constraint]]
+  name = "github.com/bobrnor/MailHog-UI"
+  version = "1.1.0"

@@ -3,7 +3,10 @@ package websockets
 import (
 	"time"
 
+	"encoding/json"
+
 	"github.com/gorilla/websocket"
+	"github.com/mailhog/data"
 )
 
 const (
@@ -18,9 +21,10 @@ const (
 )
 
 type connection struct {
-	hub  *Hub
-	ws   *websocket.Conn
-	send chan interface{}
+	namespace string
+	hub       *Hub
+	ws        *websocket.Conn
+	send      chan interface{}
 }
 
 func (c *connection) readLoop() {
@@ -51,7 +55,18 @@ func (c *connection) writeLoop() {
 				c.writeControl(websocket.CloseMessage)
 				return
 			}
-			if err := c.writeJSON(message); err != nil {
+
+			msg, ok := message.(*data.Message)
+			if !ok {
+				return
+			}
+
+			ns := c.fetchNamespace(msg)
+			if ns != c.namespace {
+				return
+			}
+
+			if err := c.writeJSON(msg); err != nil {
 				return
 			}
 		case <-ticker.C:
@@ -60,6 +75,25 @@ func (c *connection) writeLoop() {
 			}
 		}
 	}
+}
+
+func (c *connection) fetchNamespace(msg *data.Message) string {
+	xFields, ok := msg.Content.Headers["X-Fields"]
+	if !ok && len(xFields) == 0 {
+		return ""
+	}
+
+	xField := xFields[0]
+
+	var xFieldJson struct {
+		Microservice string `json:"ms"`
+	}
+
+	if err := json.Unmarshal([]byte(xField), &xFieldJson); err != nil {
+		return ""
+	}
+
+	return xFieldJson.Microservice
 }
 
 func (c *connection) writeJSON(message interface{}) error {
